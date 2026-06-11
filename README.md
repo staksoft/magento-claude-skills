@@ -5,7 +5,7 @@ A Claude Code plugin that gives Claude deep, current Magento 2 / Mage-OS experti
 | Skill | What it does |
 |---|---|
 | `magento-module` | Scaffold and extend Magento modules the right way — plugin vs observer vs preference decisions, declarative schema, DI patterns, layout XML, plus debugging playbooks for DI compile errors, layout issues, and stuck indexers. |
-| `magento-audit` | *(coming soon)* Performance audit of a Magento storefront — full-page cache leaks, indexer health, frontend Core Web Vitals. |
+| `magento-audit` | Performance audit of a Magento storefront — full-page cache leaks (`cacheable="false"` scanner), Varnish/Redis/env.php config, indexer & cron health, TTFB and Core Web Vitals. Works from a URL, a codebase, or both; outputs a severity-ranked report with exact fixes. |
 
 ## Why
 
@@ -24,6 +24,7 @@ Then in any Magento project, just ask naturally ("create a module that adds a gi
 
 ```
 /magento-module Acme_GiftMessage
+/magento-audit https://store.example/
 ```
 
 ## Works well with
