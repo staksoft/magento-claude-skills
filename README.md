@@ -38,6 +38,16 @@ These skills carry the *procedures*; for live store/config access pair them with
 - A Magento 2.4.x or Mage-OS codebase (skills verify with `bin/magento setup:di:compile` and `phpcs --standard=Magento2` when available)
 - PHP 8.1+ for running generated code; Python 3 for the scaffold script
 
+## About StakSoft
+
+This plugin is maintained by [StakSoft](https://www.staksoft.com/) — a software development and product innovation studio with 10+ years of engineering experience, specializing in e-commerce engineering (Magento, Mage-OS, Shopify, headless commerce, payment integrations and performance optimization), SaaS products, mobile apps, and cloud/DevOps.
+
+Need expert hands on your Magento or Mage-OS project?
+
+- [Hire a Magento developer](https://www.staksoft.com/hire/magento-developer)
+- [Hire a Mage-OS developer](https://www.staksoft.com/hire/mageos-developer)
+- [Contact StakSoft](https://www.staksoft.com/contact)
+
 ## License
 
 MIT
