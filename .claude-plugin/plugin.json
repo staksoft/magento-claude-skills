@@ -1,0 +1,12 @@
+{
+  "name": "magento-skills",
+  "displayName": "Magento 2 / Mage-OS Skills",
+  "description": "Claude skills for Magento 2 and Mage-OS development: correct module scaffolding, DI/plugin/observer conventions, declarative schema, debugging playbooks, and storefront performance audits.",
+  "version": "0.1.0",
+  "author": {
+    "name": "StakSoft",
+    "url": "https://github.com/staksoft"
+  },
+  "license": "MIT",
+  "keywords": ["magento", "magento2", "mage-os", "adobe-commerce", "ecommerce", "php"]
+}

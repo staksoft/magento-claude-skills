@@ -1,0 +1,41 @@
+{
+  "skill_name": "magento-module",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need a Magento 2 module called Acme_StockAlert that logs a warning whenever a product is saved with quantity 0. We're on Mage-OS 2.4.9. Put it in app/code and make sure it actually compiles.",
+      "expected_output": "A module with registration.php, etc/module.xml, composer.json, an observer on catalog_product_save_after (or an after-plugin on ProductRepositoryInterface::save) checking stock qty, constructor-injected LoggerInterface, no ObjectManager usage, passes setup:di:compile and phpcs --standard=Magento2 with docblocks.",
+      "files": [],
+      "assertions": [
+        "registration.php, etc/module.xml, and composer.json exist with consistent Acme_StockAlert naming",
+        "Uses an observer (events.xml) or plugin (di.xml), NOT a class preference/rewrite",
+        "No ObjectManager::getInstance() anywhere in the generated code",
+        "Logger is constructor-injected via Psr\\Log\\LoggerInterface",
+        "bin/magento setup:di:compile passes with the module enabled",
+        "All classes and public methods have PHPDoc blocks (phpcs Magento2 warning-free)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "How do I change the price that Magento returns for products in a specific customer group? I was going to override Magento\\Catalog\\Model\\Product with my own class via di.xml preference - is that right?",
+      "expected_output": "Advice steering away from a preference: explain preference conflicts, recommend an after-plugin on the price-related public method or the catalog price hooks, with concrete di.xml + plugin class code.",
+      "files": [],
+      "assertions": [
+        "Explicitly advises AGAINST the preference/rewrite approach and explains why (conflicts, composition)",
+        "Recommends a plugin (or dedicated pricing extension point), with working di.xml and plugin class code",
+        "Mentions area scoping or sortOrder considerations for the plugin"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "My Magento layout XML changes aren't showing up on the product page. I added view/frontend/layout/catalog_product_view.xml to my module with a new block but nothing renders. The module is enabled.",
+      "expected_output": "A systematic debugging walkthrough: clean layout/full_page caches, verify handle name, check area directory, check theme overrides, validate XML against schema, check system.log for invalid template warnings, optionally enable template hints.",
+      "files": [],
+      "assertions": [
+        "Tells the user to clean the layout/full_page/block_html caches as an early step",
+        "Mentions checking the template path (Vendor_Module::path resolution) or system.log for invalid template/XML warnings",
+        "Mentions at least one of: theme override precedence, template hints, or validating the XML schema"
+      ]
+    }
+  ]
+}
