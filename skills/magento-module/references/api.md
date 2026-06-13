@@ -45,7 +45,100 @@ Why interfaces: the webapi and GraphQL layers, extension attributes, and other m
 consume the *contract*. Magento auto-generates REST request/response handling from the
 interface's type hints and DocBlocks, so **type every parameter and return**, and annotate
 array returns (`@return \Acme\Gift\Api\Data\GiftMessageInterface[]`) — the framework reads
-these to (de)serialize.
+these to (de)serialize. Give every interface method a DocBlock — the Magento2 coding
+standard warns on missing ones even when the PHP type hints are present.
+
+## Listable repositories — getList(), SearchResults, CollectionProcessor
+
+The moment a repository needs a `getList(SearchCriteriaInterface)`, you hit the detail that
+trips almost everyone — and it fails as a **fatal error**, not a warning, so it's worth
+getting right the first time.
+
+The trap: it is tempting to give your SearchResults interface strict PHP return types
+(`getItems(): array`). **Don't.** Magento's base `Magento\Framework\Api\SearchResults`
+declares `getItems()` with *no* return type, so any subclass or interface that adds
+`: array` is an incompatible signature → `PHP Fatal error: Declaration of ... must be
+compatible with ...`. Match core exactly: **docblock types only, no PHP return types** on
+`getItems()`/`setItems()`. That's how every core SearchResults interface
+(`ProductSearchResultsInterface`, etc.) is written.
+
+```php
+// Api/Data/GiftMessageSearchResultsInterface.php
+namespace Acme\Gift\Api\Data;
+
+use Magento\Framework\Api\SearchResultsInterface;
+
+interface GiftMessageSearchResultsInterface extends SearchResultsInterface
+{
+    /**
+     * @return \Acme\Gift\Api\Data\GiftMessageInterface[]
+     */
+    public function getItems();          // NO ": array" — must stay compatible with the base
+
+    /**
+     * @param \Acme\Gift\Api\Data\GiftMessageInterface[] $items
+     * @return $this
+     */
+    public function setItems(array $items);
+}
+```
+
+Because you added no incompatible signatures, you do **not** need a SearchResults subclass —
+bind the **generic** `Magento\Framework\Api\SearchResults` straight to your interface in
+di.xml (next block). This is the simplest correct pattern and what most core modules do.
+
+Repository `getList()` using the `CollectionProcessorInterface` (note the namespace — it is
+`...Api\SearchCriteria\CollectionProcessorInterface`, a common typo source):
+
+```php
+namespace Acme\Gift\Model;
+
+use Acme\Gift\Api\GiftMessageRepositoryInterface;
+use Acme\Gift\Api\Data\GiftMessageSearchResultsInterface;
+use Acme\Gift\Api\Data\GiftMessageSearchResultsInterfaceFactory;
+use Acme\Gift\Model\ResourceModel\GiftMessage\CollectionFactory;
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+
+class GiftMessageRepository implements GiftMessageRepositoryInterface
+{
+    public function __construct(
+        private readonly CollectionFactory $collectionFactory,
+        private readonly CollectionProcessorInterface $collectionProcessor,
+        private readonly GiftMessageSearchResultsInterfaceFactory $searchResultsFactory,
+    ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria): GiftMessageSearchResultsInterface
+    {
+        $collection = $this->collectionFactory->create();
+        $this->collectionProcessor->process($searchCriteria, $collection);
+
+        $results = $this->searchResultsFactory->create();
+        $results->setSearchCriteria($searchCriteria);
+        $results->setItems($collection->getItems());
+        $results->setTotalCount($collection->getSize());
+        return $results;
+    }
+}
+```
+
+Bind the interfaces in `etc/di.xml` — the SearchResults interface binds to the **generic**
+core class, no custom class needed:
+
+```xml
+<preference for="Acme\Gift\Api\GiftMessageRepositoryInterface" type="Acme\Gift\Model\GiftMessageRepository"/>
+<preference for="Acme\Gift\Api\Data\GiftMessageInterface" type="Acme\Gift\Model\Data\GiftMessage"/>
+<preference for="Acme\Gift\Api\Data\GiftMessageSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+```
+
+The `...InterfaceFactory` classes are code-generated — reference them, don't write them.
+`getList()` returns the **interface** type so REST/GraphQL serialize it correctly. This
+exact module (db_schema + data interface + SearchResults interface + repository with
+`getList()`) was built and `setup:di:compile`-verified on Mage-OS 2.4.9 with this pattern.
 
 ## REST (and SOAP) — etc/webapi.xml
 
