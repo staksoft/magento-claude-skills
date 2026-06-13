@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.staksoft.com/">
-    <img src="https://www.staksoft.com/images/logo.svg" alt="StakSoft — Magento &amp; Mage-OS development studio" width="280">
+    <img src="assets/logo.svg" alt="StakSoft — Magento &amp; Mage-OS development studio" width="280">
   </a>
 </p>
 
@@ -47,12 +47,22 @@ In a benchmark of real module-build and debugging tasks, the `magento-module` sk
 
 ## Install
 
+**Option 1 — `npx skills` (recommended, fastest):** the [vercel-labs/skills](https://github.com/vercel-labs/skills) CLI installs both skills into `.claude/skills/`. No clone needed.
+
+```bash
+npx skills add staksoft/magento-claude-skills -a claude-code
+```
+
+Add `-g` for a global install (all projects), or `-y` for non-interactive/CI.
+
+**Option 2 — Claude Code plugin marketplace:** installs the whole plugin.
+
 ```bash
 claude plugin marketplace add staksoft/magento-claude-skills
 claude plugin install magento-skills
 ```
 
-Or install from a local clone:
+**Option 3 — from a local clone:**
 
 ```bash
 git clone https://github.com/staksoft/magento-claude-skills.git
