@@ -12,7 +12,9 @@ review/marketplace rejection reason, not ceremony.
 - [ ] No `ObjectManager::getInstance()`, no `$_GET`/`$_POST`/superglobals, no raw SQL in
       templates or controllers
 - [ ] Every class, constructor, and public method has a PHPDoc block — the Magento2 phpcs
-      standard warns on missing docblocks even when types are declared natively
+      standard warns on missing docblocks even when types are declared natively. A block with
+      only tags (e.g. just `@return void`) also warns: include a short description sentence, or
+      use `@inheritDoc` when implementing/overriding an interface or parent method
 
 ## Consistency
 

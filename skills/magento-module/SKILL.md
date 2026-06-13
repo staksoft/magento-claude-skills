@@ -61,6 +61,8 @@ These are the mistakes that get extensions rejected from the marketplace and bre
    | DI wiring, virtual types, factories, proxies | [references/di-patterns.md](references/di-patterns.md) |
    | Admin settings, grids, menus, ACL | [references/admin-ui.md](references/admin-ui.md) |
    | Frontend pages, blocks, templates, layout | [references/frontend.md](references/frontend.md) |
+   | REST / GraphQL / web APIs | [references/api.md](references/api.md) |
+   | CLI commands, cron jobs, message queues | [references/cli-cron.md](references/cli-cron.md) |
    | Errors, "not working", compile failures | [references/debugging.md](references/debugging.md) |
 
 2. **For a new module, scaffold the boilerplate with the script** — it is deterministic and
@@ -104,6 +106,10 @@ These are the mistakes that get extensions rejected from the marketplace and bre
 - "Add a column to a core table" → don't; use an extension attribute or a satellite table
   ([references/declarative-schema.md](references/declarative-schema.md)).
 - "Template needs data" → view model ([references/frontend.md](references/frontend.md)).
+- "Expose data to REST/GraphQL/headless" → service contract (`Api/` interface) first, then
+  webapi.xml or schema.graphqls ([references/api.md](references/api.md)) — never expose a Model.
+- "Run code from CLI / on a schedule / async" → console command, cron job, or message queue
+  ([references/cli-cron.md](references/cli-cron.md)); keep the entry class thin, work in a service.
 
 ## Final checklist
 
