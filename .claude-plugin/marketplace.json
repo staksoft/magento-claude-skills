@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Claude Code skills for Magento 2, Mage-OS, and Adobe Commerce development: module scaffolding, extension-mechanism conventions, declarative schema, debugging playbooks, and storefront performance audits.",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "plugins": [
     {
       "name": "magento-skills",
       "source": "./",
-      "description": "Magento 2 / Mage-OS development skills: magento-module (scaffolding, plugin-vs-observer decisions, DI patterns, debugging) and magento-audit (storefront performance, coming soon).",
-      "version": "0.1.0",
+      "description": "Magento 2 / Mage-OS development skills: magento-module (scaffolding, plugin-vs-observer decisions, DI patterns, REST/GraphQL, CLI/cron, debugging) and magento-audit (storefront performance audit).",
+      "version": "0.2.0",
       "author": {
         "name": "StakSoft",
         "url": "https://github.com/staksoft"
