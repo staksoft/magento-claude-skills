@@ -18,6 +18,7 @@
         "name": "StakSoft",
         "url": "https://github.com/staksoft"
       },
+      "homepage": "https://github.com/staksoft/magento-claude-skills",
       "license": "MIT",
       "keywords": ["magento", "magento2", "mage-os", "adobe-commerce", "ecommerce", "php", "hyva", "tailwind", "alpinejs", "skills"]
     }
