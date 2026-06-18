@@ -3,6 +3,27 @@
 All notable changes to **magento-claude-skills** are documented here.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] — 2026-06-13
+
+### Added
+- **`magento-hyva` skill** — Hyvä theme development: Alpine.js + Tailwind CSS components,
+  Magewire reactive server-driven components, child-theme setup and the Tailwind build,
+  overriding Hyvä/Luma templates and layout XML, and Luma→Hyvä compatibility. Six reference
+  docs plus a `scaffold-theme.py` child-theme generator.
+- **`magento-module` testing reference** — `testing.md`: PHPUnit unit + integration tests,
+  the Magento ObjectManager test helper, mocking patterns, and integration fixtures.
+
+### Changed
+- `magento-module` now has ten references (added testing) and `api.md` now documents the
+  verified `getList()`/SearchResults/CollectionProcessor pattern.
+
+### Verified
+- The PHPUnit unit-test pattern was written and run green on **Mage-OS 3.0.0 / Magento 2.4.9
+  with PHPUnit 12** — surfacing that PHPUnit 10+ ignores docblock metadata, so data providers
+  must use the PHP-attribute form `#[DataProvider(...)]` (documented in `testing.md`).
+- The `magento-hyva` scaffold output was structure-verified (valid PHP, XML, JS, JSON). A live
+  Hyvä render requires the licensed `hyva-themes/magento2-default-theme` package.
+
 ## [0.2.0] — 2026-06-13
 
 ### Added
@@ -38,5 +59,6 @@ This project adheres to [Semantic Versioning](https://semver.org/).
   and a deterministic `scaffold.py`) plus a `magento-audit` stub.
 - Claude Code plugin manifest and marketplace source.
 
+[0.3.0]: https://github.com/staksoft/magento-claude-skills/releases/tag/v0.3.0
 [0.2.0]: https://github.com/staksoft/magento-claude-skills/releases/tag/v0.2.0
 [0.1.0]: https://github.com/staksoft/magento-claude-skills/releases/tag/v0.1.0

@@ -63,6 +63,7 @@ These are the mistakes that get extensions rejected from the marketplace and bre
    | Frontend pages, blocks, templates, layout | [references/frontend.md](references/frontend.md) |
    | REST / GraphQL / web APIs | [references/api.md](references/api.md) |
    | CLI commands, cron jobs, message queues | [references/cli-cron.md](references/cli-cron.md) |
+   | Writing unit / integration tests (PHPUnit) | [references/testing.md](references/testing.md) |
    | Errors, "not working", compile failures | [references/debugging.md](references/debugging.md) |
 
 2. **For a new module, scaffold the boilerplate with the script** — it is deterministic and

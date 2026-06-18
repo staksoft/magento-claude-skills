@@ -36,18 +36,19 @@ Maintained by [StakSoft](https://www.staksoft.com/), a software studio with 10+ 
 
 ## What you get
 
-Two skills that load on demand when you ask Claude a relevant question:
+Three skills that load on demand when you ask Claude a relevant question:
 
 | Skill | What it does | Triggers on |
 |---|---|---|
-| **`magento-module`** | Scaffold and extend Magento modules the right way — plugin vs observer vs preference decisions, declarative schema, dependency injection, admin UI, layout XML, REST/GraphQL APIs, CLI/cron/queues, and debugging playbooks. | "create a Magento module", "observer or plugin?", "my layout XML isn't working", "setup:di:compile fails" |
+| **`magento-module`** | Scaffold and extend Magento modules the right way — plugin vs observer vs preference decisions, declarative schema, dependency injection, admin UI, layout XML, REST/GraphQL APIs, CLI/cron/queues, PHPUnit testing, and debugging playbooks. | "create a Magento module", "observer or plugin?", "my layout XML isn't working", "setup:di:compile fails" |
+| **`magento-hyva`** | Hyvä theme development — Alpine.js + Tailwind CSS components, Magewire reactive components, child-theme setup and the Tailwind build, overriding templates/layout, and Luma→Hyvä compatibility. | "build a Hyvä theme", "Alpine.js in Magento", "Tailwind in Magento", "Magewire", "convert Luma to Hyvä" |
 | **`magento-audit`** | Performance audit of a Magento storefront — full-page cache leaks (`cacheable="false"` scanner), Varnish/Redis/`env.php` config, indexer and cron health, TTFB and Core Web Vitals. Works from a URL, a codebase, or both. | "my Magento store is slow", "audit storefront performance", "Varnish not caching", "FPC hit rate" |
 
 In a benchmark of real module-build and debugging tasks, the `magento-module` skill scored **100% vs an 86% baseline** (no skill) on a Mage-OS 2.4.9 install — every generated module compiled and passed the Magento coding standard.
 
 ## Install
 
-**Option 1 — `npx skills` (recommended, fastest):** the [vercel-labs/skills](https://github.com/vercel-labs/skills) CLI installs both skills into `.claude/skills/`. No clone needed.
+**Option 1 — `npx skills` (recommended, fastest):** the [vercel-labs/skills](https://github.com/vercel-labs/skills) CLI installs all three skills into `.claude/skills/`. No clone needed.
 
 ```bash
 npx skills add staksoft/magento-claude-skills -a claude-code
@@ -76,7 +77,8 @@ The skills trigger automatically from natural language, or you can invoke them e
 | Command | Use it to | Example |
 |---|---|---|
 | `/magento-module <Vendor_Module>` | Scaffold a new module with correct `registration.php`, `module.xml`, and `composer.json`, then build the feature. | `/magento-module Acme_GiftMessage` |
-| `/magento-module` (free text) | Add a plugin/observer, declarative-schema table, admin grid, REST/GraphQL endpoint, CLI command, or cron job. | "add a plugin that uppercases SKUs on save" |
+| `/magento-module` (free text) | Add a plugin/observer, declarative-schema table, admin grid, REST/GraphQL endpoint, CLI command, cron job, or PHPUnit tests. | "add a plugin that uppercases SKUs on save" |
+| `/magento-hyva <Vendor/theme>` | Scaffold a Hyvä child theme and build Alpine/Tailwind/Magewire components. | `/magento-hyva Acme/storefront` |
 | `/magento-audit <url>` | Audit a live storefront for full-page cache, TTFB, and Core Web Vitals issues. | `/magento-audit https://store.example/` |
 | `/magento-audit <path>` | Audit a codebase for FPC killers, `env.php` cache config, and indexer/cron health. | `/magento-audit ./app/code` |
 
@@ -106,18 +108,31 @@ The `magento-module` and `magento-audit` skills know which `bin/magento` command
 
 ### `magento-module` — module development
 
-A `SKILL.md` workflow plus nine on-demand reference docs and a deterministic scaffold script:
+A `SKILL.md` workflow plus ten on-demand reference docs and a deterministic scaffold script:
 
 - **extension-mechanisms** — plugin vs observer vs preference vs `di.xml` argument decision tree
 - **declarative-schema** — `db_schema.xml`, the schema whitelist, EAV and extension attributes
 - **di-patterns** — dependency injection, factories, proxies, virtual types, area scoping
 - **admin-ui** — `system.xml` config, ACL, menus, and `ui_component` admin grids
 - **frontend** — layout XML, view models, output escaping, FPC awareness, Hyvä vs Luma
-- **api** — REST (`webapi.xml`) and GraphQL (schema + resolvers) over service contracts
+- **api** — REST (`webapi.xml`) and GraphQL (schema + resolvers) over service contracts, incl. `getList()`/SearchResults
 - **cli-cron** — console commands, cron jobs and groups, message queues and consumers
+- **testing** — PHPUnit unit + integration tests, the ObjectManager helper, mocking, PHP-attribute data providers
 - **debugging** — playbooks for `setup:di:compile` failures, layout not applying, stuck indexers
 - **checklists** — a pre-finish gate covering security, caching, i18n, and coding standards
 - **scripts/scaffold.py** — generates module boilerplate with no XML-namespace typos
+
+### `magento-hyva` — Hyvä theme development
+
+A `SKILL.md` workflow plus six reference docs and a theme scaffold script:
+
+- **theme-setup** — Hyvä child theme structure, `theme.xml` parent, the `web/tailwind/` build
+- **alpine** — Alpine.js directives, seeding PHP data, stores/events, CSP-safe scripts
+- **tailwind** — Tailwind config, design tokens, `@apply`, and the purge/content trap
+- **magewire** — reactive server-driven components (`wire:model`/`wire:click`), validation, FPC safety
+- **overriding** — overriding Hyvä/Luma templates, layout XML, Hyvä view-model helpers
+- **luma-compat** — why Luma modules break on Hyvä and the compat-module / fallback / re-implement fixes
+- **scripts/scaffold-theme.py** — generates a Hyvä child theme + Tailwind build skeleton
 
 ### `magento-audit` — storefront performance
 
