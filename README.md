@@ -15,6 +15,10 @@ Maintained by [StakSoft](https://www.staksoft.com/), a software studio with 10+ 
 ![Mage-OS compatible](https://img.shields.io/badge/Mage--OS-compatible-blue.svg)
 ![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-8A2BE2.svg)
 
+<p align="center">
+  <img src="assets/demo.gif" alt="Install magento-claude-skills with npx and use the /magento-module, /magento-hyva, and /magento-audit commands" width="720">
+</p>
+
 ---
 
 ## Contents
